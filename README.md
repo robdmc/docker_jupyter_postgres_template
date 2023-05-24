@@ -27,6 +27,10 @@ and build install all the python packages you specify in the
 `requirements.txt` file.  Note that you  can run individual build steps
 by running the corresponding make targets seen under `make help`.
 
-
+## Running the project
+The two most common prebuilt command you will probably run are
+* `make notebook` which will run a jupyter notebook in the container
+* `make pgcli` which will open a container shell with pgcli connected
+to your database.
 
 
