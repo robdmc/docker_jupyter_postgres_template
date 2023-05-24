@@ -7,15 +7,11 @@ help:  ## Print the help documentation
 
 
 .PHONY: build
-build: ## Build images locally and don't send to dockerhub
+build: ## Build docker images locally and don't send to dockerhub
 	docker builder prune -f
 	docker-compose down
 	docker rmi -f robdmc/dockerjupyterpostgres
 	docker build -t  robdmc/dockerjupyterpostgres .
-
-.PHONY: test
-test: ## Run test suite
-	docker-compose run --rm test
 
 
 .PHONY: shell
@@ -27,28 +23,40 @@ notebook: ## Start a jupyter notebook
 	docker-compose run --rm --service-ports notebook
 
 .PHONY: build_env
-build_env: ## Creates a fresh test db on the postgres server
+build_env: ## Build the python environment
 	docker-compose run --rm build_env
 
 .PHONY: create_db
-create_db: ## Creates a fresh test db on the postgres server
+create_db: ## Creates the working dataqbase
 	docker-compose run --rm make_test_db
-
-.PHONY: load_db
-load_db: ## Load table into the database
-	docker-compose run --rm load_db
 
 .PHONY: down
 down: ## stop all docker-compose services
 	docker-compose down
 
 .PHONY: reset
-reset: ## Only reset docker stuff for this project
+reset: ## Blow away all docker resourses associated with this project
 	docker-compose down
 	-docker volume rm docker_jupyter_postgres_db-data
 	-docker volume rm docker_jupyter_postgres_penv
 	-docker images | grep 'dockerjupyterpostgres' | awk '{print $3}'  | xargs docker rmi
 	-docker builder prune -f
 
-
-
+.PHONY: bootstrap
+bootstrap: ## Nuke all resources and rebuild them
+	# stop serverses and blow away all docker resources
+	docker-compose down
+	-docker volume rm docker_jupyter_postgres_db-data
+	-docker volume rm docker_jupyter_postgres_penv
+	-docker images | grep 'dockerjupyterpostgres' | awk '{print $3}'  | xargs docker rmi
+	-docker builder prune -f
+	#
+	# Build the docker container
+	docker rmi -f robdmc/dockerjupyterpostgres
+	docker build -t  robdmc/dockerjupyterpostgres .
+	#
+	# Build python env
+	docker-compose run --rm build_env
+	#
+	# Create the working database
+	docker-compose run --rm make_test_db
