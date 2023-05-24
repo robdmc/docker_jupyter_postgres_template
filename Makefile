@@ -22,6 +22,11 @@ shell: ## Open a shell in the container
 notebook: ## Start a jupyter notebook
 	docker-compose run --rm --service-ports notebook
 
+.PHONY: pgcli
+pgcli: ## Run a pgcli session
+	docker compose run --rm pgcli
+
+
 .PHONY: build_env
 build_env: ## Build the python environment
 	docker-compose run --rm build_env
