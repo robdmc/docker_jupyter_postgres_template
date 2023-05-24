@@ -1,4 +1,3 @@
-pyarrow
 easier
 ibis-framework[postgres]==5.1.0
 ipython
@@ -10,5 +9,6 @@ pdbpp
 pgcli
 pip
 psycopg2
+pyarrow
 python-dateutil
 scipy
