@@ -1,5 +1,6 @@
 {
+    "project_dirname": "docker_jupyter_postgres",
+    "project_name": "docker_jupyter_postgres",
     "database_name": "test",
-    "docker_username": "tester",
-    "project_name": "docker_jupyter_postgres"
+    "docker_username": "tester"
 }
