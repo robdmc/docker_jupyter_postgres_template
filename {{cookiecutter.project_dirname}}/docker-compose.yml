@@ -8,6 +8,7 @@ services:
     volumes:
       - ./code:/code
       - env:/env
+    working_dir: /code
 
   base:
     &base
@@ -20,7 +21,6 @@ services:
 
   test:
     <<: *base_no_env
-    working_dir: /code
     command: /bin/bash
 
   build_env:
@@ -31,6 +31,10 @@ services:
     <<: *base
     entrypoint: /code/make_db.sh
 
+  pgcli:
+    <<: *base_no_env
+    entrypoint: /code/run_pgcli.py
+
   truncate:
     <<: *base
     entrypoint: /code/truncate.py
@@ -39,7 +43,6 @@ services:
     <<: *base
     ports:
       - "9999:9999"
-    working_dir: /code
     command: jupyter-lab  --port=9999  --NotebookApp.iopub_data_rate_limit=10000000000 --allow-root --no-browser --ip=0.0.0.0
 
   db:
