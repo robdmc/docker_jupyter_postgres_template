@@ -65,3 +65,12 @@ bootstrap: ## Nuke all resources and rebuild them
 	#
 	# Create the working database
 	docker-compose run --rm make_db
+
+.PHONY: nuke
+nuke: ## Nuke all resources
+	# stop serverses and blow away all docker resources
+	docker-compose down
+	-docker volume rm {{cookiecutter.project_name}}_db-data
+	-docker volume rm {{cookiecutter.project_name}}_env
+	-docker images | grep '{{cookiecutter.project_name}}' | awk '{print $3}'  | xargs docker rmi
+	-docker builder prune -f
