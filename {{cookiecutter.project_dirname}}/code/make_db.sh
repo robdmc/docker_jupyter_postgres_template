@@ -1,4 +1,4 @@
 #! /usr/bin/env bash
 
-dropdb {{database_name}} --if-exists
-createdb {{database_name}}
+dropdb {{cookiecutter.database_name}} --if-exists
+createdb {{cookiecutter.database_name}}

@@ -10,8 +10,8 @@ help:  ## Print the help documentation
 build: ## Build docker images locally and don't send to dockerhub
 	docker builder prune -f
 	docker-compose down
-	docker rmi -f {{docker_username}}/{{project_name}}
-	docker build -t  {{docker_username}}/{{project_name}} .
+	docker rmi -f {{cookiecutter.docker_username}}/{{cookiecutter.project_name}}
+	docker build -t  {{cookiecutter.docker_username}}/{{cookiecutter.project_name}} .
 
 
 .PHONY: shell
@@ -42,23 +42,23 @@ down: ## stop all docker-compose services
 .PHONY: reset
 reset: ## Blow away all docker resourses associated with this project
 	docker-compose down
-	-docker volume rm {{project_name}}_db-data
-	-docker volume rm {{project_name}}_env
-	-docker images | grep '{{project_name}}' | awk '{print $3}'  | xargs docker rmi
+	-docker volume rm {{cookiecutter.project_name}}_db-data
+	-docker volume rm {{cookiecutter.project_name}}_env
+	-docker images | grep '{{cookiecutter.project_name}}' | awk '{print $3}'  | xargs docker rmi
 	-docker builder prune -f
 
 .PHONY: bootstrap
 bootstrap: ## Nuke all resources and rebuild them
 	# stop serverses and blow away all docker resources
 	docker-compose down
-	-docker volume rm {{project_name}}_db-data
-	-docker volume rm {{project_name}}_env
-	-docker images | grep '{{project_name}}' | awk '{print $3}'  | xargs docker rmi
+	-docker volume rm {{cookiecutter.project_name}}_db-data
+	-docker volume rm {{cookiecutter.project_name}}_env
+	-docker images | grep '{{cookiecutter.project_name}}' | awk '{print $3}'  | xargs docker rmi
 	-docker builder prune -f
 	#
 	# Build the docker container
-	docker rmi -f {{docker_username}}/{{project_name}}
-	docker build -t  {{docker_username}}/{{project_name}} .
+	docker rmi -f {{cookiecutter.docker_username}}/{{cookiecutter.project_name}}
+	docker build -t  {{cookiecutter.docker_username}}/{{cookiecutter.project_name}} .
 	#
 	# Build python env
 	docker-compose run --rm build_env
