@@ -1,4 +1,4 @@
 #! /usr/bin/env bash
 
-dropdb test --if-exists
-createdb test
+dropdb {{database_name}} --if-exists
+createdb {{database_name}}

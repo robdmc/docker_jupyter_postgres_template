@@ -1,0 +1,5 @@
+{
+    "database_name": "test",
+    "docker_username": "tester",
+    "project_name": "docker_jupyter_postgres"
+}
