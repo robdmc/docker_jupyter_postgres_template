@@ -4,12 +4,26 @@
 This repo is intented to be used with the cookiecutter python package.
 Make sure it is installed in you python environment with the command
 ```
-pip install XXXX
+pip install cookiecutter
 ```
-Then (possibly create a directory??) and run
+Now you will create a directory containing the project code.  Naivate
+to the parent directory into which you'd like to place the project
+directory (e.g.  ~/rob/repos) and run the cookiecutter command below,
+which will prompt you for four values:
+
+* project_dirname: This is the name of the directory into which to place
+  all the code.
+* project_name: This is the project name that will be prepended to
+  all docker resource names (e.g. images, volumes, networks, etc.)
+* database_name: The postgres databasename that will be used for the project
+* docker_username: The docker image will be built with a name prefixed by
+  this docker username.  So, for example: `my_docker_username/my_project_name`
+
 ```
-XXX
+cookiecutter https://github.com/robdmc/docker_jupyter_postgres_template
 ```
+
+This command will prompt you for 3 variables
 
 ## Building the project
 Once coockiecutter has deployed the code, you will see all the prebuilt
