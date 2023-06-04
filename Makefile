@@ -10,8 +10,8 @@ help:  ## Print the help documentation
 build: ## Build docker images locally and don't send to dockerhub
 	docker builder prune -f
 	docker-compose down
-	docker rmi -f robdmc/dockerjupyterpostgres
-	docker build -t  robdmc/dockerjupyterpostgres .
+	docker rmi -f {{docker_username}}/{{project_name}}
+	docker build -t  {{docker_username}}/{{project_name}} .
 
 
 .PHONY: shell
@@ -33,7 +33,7 @@ build_env: ## Build the python environment
 
 .PHONY: create_db
 create_db: ## Creates the working dataqbase
-	docker-compose run --rm make_test_db
+	docker-compose run --rm create_db
 
 .PHONY: down
 down: ## stop all docker-compose services
@@ -42,26 +42,26 @@ down: ## stop all docker-compose services
 .PHONY: reset
 reset: ## Blow away all docker resourses associated with this project
 	docker-compose down
-	-docker volume rm docker_jupyter_postgres_db-data
-	-docker volume rm docker_jupyter_postgres_penv
-	-docker images | grep 'dockerjupyterpostgres' | awk '{print $3}'  | xargs docker rmi
+	-docker volume rm {{project_name}}_db-data
+	-docker volume rm {{project_name}}_env
+	-docker images | grep '{{project_name}}' | awk '{print $3}'  | xargs docker rmi
 	-docker builder prune -f
 
 .PHONY: bootstrap
 bootstrap: ## Nuke all resources and rebuild them
 	# stop serverses and blow away all docker resources
 	docker-compose down
-	-docker volume rm docker_jupyter_postgres_db-data
-	-docker volume rm docker_jupyter_postgres_penv
-	-docker images | grep 'dockerjupyterpostgres' | awk '{print $3}'  | xargs docker rmi
+	-docker volume rm {{project_name}}_db-data
+	-docker volume rm {{project_name}}_env
+	-docker images | grep '{{project_name}}' | awk '{print $3}'  | xargs docker rmi
 	-docker builder prune -f
 	#
 	# Build the docker container
-	docker rmi -f robdmc/dockerjupyterpostgres
-	docker build -t  robdmc/dockerjupyterpostgres .
+	docker rmi -f {{docker_username}}/{{project_name}}
+	docker build -t  {{docker_username}}/{{project_name}} .
 	#
 	# Build python env
 	docker-compose run --rm build_env
 	#
 	# Create the working database
-	docker-compose run --rm make_test_db
+	docker-compose run --rm make_db
