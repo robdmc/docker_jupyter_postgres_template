@@ -1,5 +1,5 @@
 easier
-ibis-framework[postgres]==5.1.0
+ibis-framework[postgres]
 ipython
 jupyter
 jupyterlab
