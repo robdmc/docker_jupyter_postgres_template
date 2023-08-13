@@ -48,7 +48,7 @@ reset: ## Blow away all docker resourses associated with this project
 	-docker builder prune -f
 
 .PHONY: bootstrap
-bootstrap: ## Nuke all resources and rebuild them
+bootstrap: ## Delete all project resources and rebuild them
 	# stop serverses and blow away all docker resources
 	docker-compose down
 	-docker volume rm {{cookiecutter.project_name}}_db-data
