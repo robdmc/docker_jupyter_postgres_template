@@ -1,4 +1,5 @@
-FROM python:3.8.12
+FROM python:3.10
+# FROM python:3.8.12  This was original python version.  Updated to above, but needs testing.
 
 WORKDIR /app
 ENV LC_ALL en_US.UTF-8
