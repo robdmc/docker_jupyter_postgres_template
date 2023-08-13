@@ -5,6 +5,7 @@ jupyter
 jupyterlab
 numpy
 pandas
+pandera
 pdbpp
 pgcli
 pip
